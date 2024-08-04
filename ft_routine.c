@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 04:58:08 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/04 18:19:37 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/04 20:22:01 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void    ft_eating(t_philo *philo)
 {
-	if (philo->id % 2 != 0)
-		usleep(100);
+	if (philo->id % 2 == 0 && philo->nb_philo % 2 != 0)
+        usleep(100);
 	pthread_mutex_lock(&philo->forks[philo->left_fork]);
 	pthread_mutex_lock(&philo->forks[philo->right_fork]);
 	printf(GREEN"PHILO %d: EATING \n"RESET, philo->id);

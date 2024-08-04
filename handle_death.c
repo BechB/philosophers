@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:19:22 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/04 18:20:56 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:31:41 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void    *handle_death(void *philos)
 {
     t_philo *philo = (t_philo *) philos;
-    
     int death;
 
     death = 0;

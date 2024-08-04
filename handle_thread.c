@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/04 18:50:38 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/04 19:30:54 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	handle_thread(t_data *dta)
 {
 	int i;
 	pthread_t   	*philo_ids;
-	pthread_t		checker;
+	pthread_t		*checker;
 	pthread_mutex_t *mutex;
 
 	i = 0;
 	mutex = malloc((sizeof(pthread_mutex_t)) * dta->nb_philo);
 	philo_ids = malloc(sizeof(pthread_t) * dta->nb_philo);
-	//checker = malloc(sizeof(pthread_t) * dta->nb_philo);
+	checker = malloc(sizeof(pthread_t) * dta->nb_philo);
 	while (i < dta->nb_philo)
 	{
 		pthread_mutex_init(&mutex[i], NULL);
@@ -63,14 +63,14 @@ void	handle_thread(t_data *dta)
 		init_philo(dta, i);
 		dta->philos[i].forks = mutex;
 		pthread_create(&philo_ids[i] , NULL, ft_routine, (void *) &dta->philos[i]);
+		pthread_create(&checker[i], NULL, handle_death, (void *) &dta->philos[i]);
 		i++;
 	}
-	pthread_create(&checker, NULL, handle_death, (void *) &dta->philos);
 	i = 0;
 	while (i < dta->nb_philo)
 	{
 		pthread_join(philo_ids[i], NULL);
-		pthread_join(checker, NULL);
+		pthread_join(checker[i], NULL);
 		i++;
 	}
 	i = 0;
