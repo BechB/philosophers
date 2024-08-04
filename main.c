@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:28 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/01 21:08:40 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:09:52 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv)
 			{
 				printf(RED"ILS ONT TOUS MANGE\n"RESET);
 				break ; 
-			}	
+			}
 		}
 		else
 			return (1);
