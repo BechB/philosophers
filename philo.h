@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:24 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/03 15:16:29 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/04 17:54:26 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,33 @@ typedef struct s_data t_data;
 
 // chaque philo
 typedef struct s_philo { 
-    int             id;
-    int             nb_philo;
-    int             t_die;
-    int             t_eat;
-    int             t_sleep;
-    int             t_must_eat;
-    int             t_have_eat;
-    int             finish_eat;
-    struct timeval  time;
-    // struct timeval  end_eat;
-    pthread_mutex_t *forks;
-    int             left_fork;
-    int             right_fork;
+	int             id;
+	int             nb_philo;
+	int             t_die;
+	int             t_eat;
+	int             t_sleep;
+	int             t_must_eat;
+	int             t_have_eat;
+	int             finish_eat;
+	struct timeval  time;
+	struct timeval  last_eat;
+	struct timeval	eat;				
+	pthread_mutex_t *forks;
+	int             left_fork;
+	int             right_fork;
 }  t_philo;
 
 // principale
 typedef struct s_data { 
-    int             t_die;
-    int             t_eat;
-    int             t_sleep;
-    int             t_must_eat;
-    int             t_have_eat;
-    int             finish_eat;
-    int             error;
-    int             nb_philo;
-    t_philo         *philos;
+	int             t_die;
+	int             t_eat;
+	int             t_sleep;
+	int             t_must_eat;
+	int             t_have_eat;
+	int             finish_eat;
+	int             error;
+	int             nb_philo;
+	t_philo         *philos;
 }   t_data;
 
 //UTILS
