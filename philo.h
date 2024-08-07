@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:24 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/04 17:54:26 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/07 14:58:33 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ typedef struct s_philo {
 	int             finish_eat;
 	struct timeval  time;
 	struct timeval  last_eat;
-	struct timeval	eat;				
+	struct timeval	eat;
+	struct timeval	start;
+	struct timeval	end;
+	int 			death;		
 	pthread_mutex_t *forks;
 	int             left_fork;
 	int             right_fork;
