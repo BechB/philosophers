@@ -6,31 +6,34 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:19:22 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/07 15:02:52 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/08 22:05:04 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
 void    *handle_death(void *philos)
 {
     t_philo *philo = (t_philo *) philos;
-    int death;
-    int sec;
-
-    death = 0;
-    sec = 0;
-    gettimeofday(&philo->time, NULL);
-    printf("Le philo %d a manger a fini a %ld,%ld ms\n", philo->id, philo->start.tv_sec, (philo->start.tv_usec));
-    printf("Actuellement il est %ld,%ld\n", philo->time.tv_sec, philo->time.tv_usec);
-    sec = philo->time.tv_sec - philo->start.tv_sec;
-    if (sec == 0)
+    long    current_time;
+    if (philo->last_eat <= 0)
+        return (NULL);     
+    current_time = get_time(philos);
+    //printf("le philo %d a fini de manger a %ld, il est %ld\n", philo->id, philo->last_eat, current_time);
+    //printf("diff : %ld\n", current_time - philo->last_eat);
+    if (current_time - philo->last_eat > (philo->t_die / 1000))
     {
-        death = (philo->time.tv_usec / 1000) - (philo->start.tv_usec / 1000);
-        printf(RED"DEATH %d\n"RESET, death);
+        printf(RED "PHILO %d IS DEAD\n" RESET, philo->id);
+        exit (1);
     }
-    if (death > philo->t_die)
-        philo->death = 1;
     return (NULL);
+}
+
+long    get_time(t_philo *philos)
+{
+    long    current_time;
+
+    gettimeofday(&philos->time, NULL);
+    current_time = (philos->time.tv_sec * 1000) + (philos->time.tv_usec / 1000);
+    return (current_time);
 }

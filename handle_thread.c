@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/07 15:08:47 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/08 22:04:51 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void    init_philo(t_data *dta, int i)
 	dta->philos[i].t_eat = dta->t_eat;
 	dta->philos[i].t_sleep = dta->t_sleep;
 	dta->philos[i].t_must_eat = dta->t_must_eat;
-	dta->philos[i].eat.tv_usec = dta->philos->last_eat.tv_usec;
+	dta->philos[i].last_eat = dta->philos->last_eat;
 	if (dta->philos[i].id == dta->nb_philo)
 		dta->philos[i].right_fork = 0;
 	else
@@ -64,6 +64,7 @@ void	handle_thread(t_data *dta)
 		dta->philos[i].forks = mutex;
 		pthread_create(&philo_ids[i] , NULL, ft_routine, (void *) &dta->philos[i]);
 		pthread_create(&checker[i], NULL, handle_death, (void *) &dta->philos[i]);
+		usleep(20);
 		i++;
 	}
 	i = 0;
