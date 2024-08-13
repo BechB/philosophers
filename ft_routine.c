@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 04:58:08 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 19:48:01 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 22:11:57 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void    ft_eating(t_philo *philo)
 	
 	pthread_mutex_lock(&philo->forks[philo->left_fork]);
 	pthread_mutex_lock(&philo->forks[philo->right_fork]);
+	time = get_time(philo) - philo->go;
 	if (philo->death == 1)
 		return ;
-	time = get_time(philo) - philo->go;
 	printf("[%ld] |PHILO [%d] |has taken forks\n", time, philo->id);	
 	printf(GREEN"[%ld] |PHILO [%d] |EATING\n"RESET, time, philo->id);
 	usleep(philo->t_eat);
@@ -40,10 +40,10 @@ void    ft_eating(t_philo *philo)
 void    ft_sleeping(t_philo *philo)
 {
 	long	time;
+	time = get_time(philo) - philo->go;
 
 	if (philo->death == 1)
 		return ;
-	time = get_time(philo) - philo->go;
 	printf(BLUE"[%ld] |PHILO [%d] |SLEEPING\n"RESET, time, philo->id);
 	usleep(philo->t_sleep);
 	return ; 
@@ -52,10 +52,9 @@ void    ft_sleeping(t_philo *philo)
 void    ft_thinking(t_philo *philo)
 {
 	long	time;
-
+	time = get_time(philo) - philo->go;
 	if (philo->death == 1)
 		return ;
-	time = get_time(philo) - philo->go;
 	printf(YELLOW"[%ld] |PHILO [%d] |THINKING\n"RESET, time, philo->id);
 	return ;
 }

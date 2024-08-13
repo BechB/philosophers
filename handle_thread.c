@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 19:35:10 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 22:15:21 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 void    *ft_routine(void *philos)
 {
 	t_philo *philo = (t_philo *) philos;
+	if (philo->nb_philo == 1)
+	{
+		printf("0 :PHILO 1 has taken a fork\n");
+		usleep(philo->t_die);
+		printf(RED"%d :PHILO 1 is died\n"RESET, philo->t_die / 1000);
+		philo->death = 1;
+	}
 	if (philo->id % 2 == 0 && philo->nb_philo % 2 == 0)
         usleep(50);
 	while(1)
