@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:24 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 19:19:41 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 23:16:42 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_philo {
 	int             t_have_eat;
 	int             finish_eat;
 	struct timeval  time;
+	struct timeval	sleep;
 	long			start;
 	long			last_eat;
 	long			go;
@@ -93,6 +94,7 @@ void    *ft_routine(void *dta);
 void    ft_eating(t_philo *philo);
 void    ft_sleeping(t_philo *philo);
 void    ft_thinking(t_philo *philo);
+void	ft_usleep(t_philo *philo, int arg);
 //CHECKER_OF_DEATH
 void    *handle_death(void *philos);
 long    get_time(t_philo *infos);

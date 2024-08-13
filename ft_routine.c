@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 04:58:08 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 22:11:57 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 23:21:23 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    ft_eating(t_philo *philo)
 		return ;
 	printf("[%ld] |PHILO [%d] |has taken forks\n", time, philo->id);	
 	printf(GREEN"[%ld] |PHILO [%d] |EATING\n"RESET, time, philo->id);
-	usleep(philo->t_eat);
+	ft_usleep(philo, philo->t_die);
 	philo->last_eat = get_time(philo);
 	philo->t_have_eat++;
 	pthread_mutex_unlock(&philo->forks[philo->right_fork]);
@@ -56,5 +56,23 @@ void    ft_thinking(t_philo *philo)
 	if (philo->death == 1)
 		return ;
 	printf(YELLOW"[%ld] |PHILO [%d] |THINKING\n"RESET, time, philo->id);
+	return ;
+}
+
+void	ft_usleep(t_philo *philo, int arg)
+{
+	long	t;
+	long	time;
+
+	gettimeofday(&philo->sleep, NULL);
+	time = (philo->time.tv_sec * 1000000) + (philo->time.tv_usec);
+	while(1)
+	{
+		gettimeofday(&philo->sleep, NULL);
+		t = (philo->time.tv_sec * 1000000) + (philo->time.tv_usec);
+		usleep(50);
+		if (t - time >= arg)
+			return ;
+	}
 	return ;
 }
