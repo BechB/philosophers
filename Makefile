@@ -6,10 +6,11 @@ SRC = main.c \
 		handle_thread.c \
 		ft_routine.c \
 		handle_death.c \
+		free_destroy.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = gcc -Wall -Wextra -Werror
+CC = gcc -Wall -Wextra -Werror #-fsanitize=address -static-libasan -g
 
 .c.o = $(CC) -c -o $(OBJ)
 

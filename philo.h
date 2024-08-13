@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:24 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/08 19:08:09 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:19:41 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,9 @@ typedef struct s_philo {
 	struct timeval  time;
 	long			start;
 	long			last_eat;
-	int 			death;		
+	long			go;
+	int 			death;
+	pthread_mutex_t die;
 	pthread_mutex_t *forks;
 	int             left_fork;
 	int             right_fork;
@@ -86,15 +88,14 @@ void	parse_args2(t_data *dta, int argc, char **argv);
 void	parse_args3(t_data *dta, int argc, char **argv);
 //HANDLE_PTHREAD
 void	handle_thread(t_data *dta);
-void    handl_thread2(t_data *dta);
 void    *ft_routine(void *dta);
 //ROUTINE
 void    ft_eating(t_philo *philo);
 void    ft_sleeping(t_philo *philo);
 void    ft_thinking(t_philo *philo);
-void    ft_died(t_philo *philo);
 //CHECKER_OF_DEATH
 void    *handle_death(void *philos);
 long    get_time(t_philo *infos);
-
+//FREE
+void	free_and_destroy(t_data *dta);
 #endif

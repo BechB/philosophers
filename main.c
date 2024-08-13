@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:28 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/08 21:38:06 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:31:03 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,16 @@ int	main(int argc, char **argv)
 		parse_args3(dta, argc, argv);
 	if ((argc == 5 || argc == 6) && dta->error == 0)
 		initialize(dta, argv);
-	while(1)
+	if (dta->nb_philo == 1)
 	{
-		if (dta->error == 0)
-		{
-			handle_thread(dta);
-			if (dta->philos->finish_eat == 1)
-			{
-				printf(RED"ILS ONT TOUS MANGE\n"RESET);
-				break ; 
-			}
-			else if (dta->philos->death == 1)
-			{				
-				printf(RED"PHILO MORT !\n"RESET);
-				break ; 		
-			}
-		}
-		else
-			return (1);
+		printf("0 :PHILO 1 has taken a fork\n");
+		usleep(dta->philos->t_die);
+		printf(RED"%d :PHILO 1 is died\n"RESET, dta->philos->t_die / 1000);
+		dta->philos->death = 1;
 	}
+	if (dta->error == 0 && dta->philos->death == 0)
+		handle_thread(dta);
+	else
+		return (1);
 	return (0);
 }
