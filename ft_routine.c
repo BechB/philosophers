@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 04:58:08 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/14 01:08:14 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:13:56 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,14 @@ void    ft_eating(t_philo *philo)
 		return ;
 	printf("[%ld] |PHILO [%d] |has taken forks\n", time, philo->id);	
 	printf(GREEN"[%ld] |PHILO [%d] |EATING\n"RESET, time, philo->id);
-	ft_usleep(philo, philo->t_eat);
 	philo->last_eat = get_time(philo);
+	ft_usleep(philo, philo->t_eat);
 	philo->t_have_eat++;
 	pthread_mutex_unlock(&philo->forks[philo->right_fork]);
 	pthread_mutex_unlock(&philo->forks[philo->left_fork]);
 	if (philo->t_have_eat == philo->t_must_eat)
 	{
 		philo->finish_eat++;
-		philo->t_have_eat = -1;
 		return ;
 	}
 	return ;

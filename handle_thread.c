@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/17 14:57:20 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 20:14:06 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ void    *ft_routine(void *philos)
 	{
 		if (philo->death == 1 || philo->finish_eat == 1)	
 			return (NULL);
-		if (philo->t_have_eat != -1)
-			ft_eating(philo);
+		ft_eating(philo);
 		if (philo->death == 1 || philo->finish_eat == 1)
 			return (NULL);
 		ft_sleeping(philo);
