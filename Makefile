@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/08/15 19:45:06 by bbousaad          #+#    #+#              #
+#    Updated: 2024/08/17 14:48:16 by bbousaad         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 
 SRC = main.c \
@@ -7,10 +19,11 @@ SRC = main.c \
 		ft_routine.c \
 		handle_death.c \
 		free_destroy.c \
+		one_philo.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = gcc -Wall -Wextra -Werror #-fsanitize=address -static-libasan -g
+CC = gcc -Wall -Wextra -Werror #-fsanitize=address -g
 
 .c.o = $(CC) -c -o $(OBJ)
 
@@ -22,7 +35,7 @@ all: $(NAME)
 
 clean:
 	@rm -f $(OBJ)
-	@echo "Suppression des .o" 
+	@echo "Suppression des .o"
 
 fclean: clean
 	@rm -f $(OBJ) $(NAME)

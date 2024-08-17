@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:28 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 22:14:37 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:42:39 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,19 @@ void	initialize( t_data *dta, char **argv)
 	if(argv[5])
 		dta->t_must_eat = ft_atoi(argv[5]);
 	dta->t_have_eat = 0;
-	dta->philos = malloc(sizeof(t_philo) * dta->nb_philo + 1);
+	dta->philos = malloc(sizeof(t_philo) * dta->nb_philo);
+	dta->philos->finish_eat = 0;
 	if (!dta->philos)
 	{
 		dta->error = 1;
 		return ;
 	}
-	dta->philos->finish_eat = 0;
 }
 
 int	main(int argc, char **argv)
 {
 	t_data  *dta;
+	(void) argc;
 
 	dta = malloc(sizeof(t_data));
 	dta->error = 0;
@@ -41,11 +42,11 @@ int	main(int argc, char **argv)
 		parse_args2(dta, argc, argv);
 	if (dta->error == 0)
 		parse_args3(dta, argc, argv);
-	if ((argc == 5 || argc == 6) && dta->error == 0)
-		initialize(dta, argv);
-	if (dta->error == 0 && dta->philos->death == 0)
-		handle_thread(dta);
-	else
-		return (1);
+	if (dta->error == 1)
+		return(1);
+	initialize(dta, argv);
+	handle_thread(dta);
+	free(dta->philos);
+	free(dta);
 	return (0);
 }

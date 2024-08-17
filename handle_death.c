@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:19:22 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 22:14:13 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/16 14:53:35 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void    *handle_death(void *philos)
 		{
 			if (philo->last_eat != 0)
 			{
+				if (philo->finish_eat == 1)
+					return (NULL);
 				current_time = get_time(philos);
 				if (current_time - philo->last_eat > (philo->t_die / 1000))
 				{
-					pthread_mutex_lock(&philo->die);
 					time = get_time(philo) - philo->go;
 					printf(RED "[%ld] :PHILO [%d] IS DEAD\n" RESET, time, philo->id);
 					i = 0;
@@ -38,7 +39,6 @@ void    *handle_death(void *philos)
 						philo[i].death = 1;
 						i++;
 					}
-					pthread_mutex_destroy(&philo->die);
 					return (NULL);
 				}
 			}

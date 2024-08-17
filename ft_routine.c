@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 04:58:08 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 23:39:13 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/14 01:08:14 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void    ft_eating(t_philo *philo)
 void    ft_sleeping(t_philo *philo)
 {
 	long	time;
-	time = get_time(philo) - philo->go;
 
+	time = get_time(philo) - philo->go;
 	if (philo->death == 1)
 		return ;
 	printf(BLUE"[%ld] |PHILO [%d] |SLEEPING\n"RESET, time, philo->id);
@@ -52,6 +52,7 @@ void    ft_sleeping(t_philo *philo)
 void    ft_thinking(t_philo *philo)
 {
 	long	time;
+	
 	time = get_time(philo) - philo->go;
 	if (philo->death == 1)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:16:42 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/07/27 21:59:26 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:37:39 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_atoi(char *str)
 
 int	ft_isdigit(int c)
 {
-	if ((c <= 57) && (c >= 48))
+	if ((c <= '9') && (c >= '0'))
 		return (1);
 	return (0);
 }

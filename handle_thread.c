@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 23:40:32 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:57:20 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,29 @@
 
 void    *ft_routine(void *philos)
 {
-	t_philo *philo = (t_philo *) philos;
-	if (philo->nb_philo == 1)
+    t_philo *philo = (t_philo *) philos;
+
+	if (one_philo(philo) == 1)
 	{
-		printf("0 :PHILO 1 has taken a fork\n");
-		ft_usleep(philo, philo->t_die);
-		printf(RED"%d :PHILO 1 is died\n"RESET, philo->t_die / 1000);
 		philo->death = 1;
+		return (NULL);
 	}
 	if (philo->id % 2 == 0 && philo->nb_philo % 2 == 0)
         usleep(25);
 	while(1)
 	{
-		if (philo->death == 1)
-			break ;
+		if (philo->death == 1 || philo->finish_eat == 1)	
+			return (NULL);
 		if (philo->t_have_eat != -1)
 			ft_eating(philo);
-		if (philo->finish_eat == 1)
+		if (philo->death == 1 || philo->finish_eat == 1)
 			return (NULL);
-		if (philo->death == 1)
-			break ;
 		ft_sleeping(philo);
-		if (philo->death == 1)	
-			break ;
+		if (philo->death == 1 || philo->finish_eat == 1)	
+			return (NULL);
 		ft_thinking(philo);
+		if (philo->death == 1 || philo->finish_eat == 1)	
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -63,8 +62,8 @@ void	handle_thread(t_data *dta)
 {
 	int i;
 	pthread_t   	*philo_ids;
-	pthread_t		checker;
 	pthread_mutex_t *mutex;
+	pthread_t		checker;
 
 	i = 0;
 	dta->philos->death = 0;
@@ -89,13 +88,15 @@ void	handle_thread(t_data *dta)
 		pthread_create(&philo_ids[i] , NULL, ft_routine, (void *) &dta->philos[i]);
 		i++;
 	}
-	pthread_create(&checker, NULL, handle_death, (void *)dta->philos);
+	if (dta->nb_philo > 1)
+		pthread_create(&checker, NULL, handle_death, (void *)dta->philos);
 	i = 0;
 	while (i < dta->nb_philo)
 	{
 		pthread_join(philo_ids[i], NULL);
 		i++;
 	}
+	pthread_join(checker, NULL);
 	i = 0;
 	while (i < dta->nb_philo)
 	{
@@ -103,10 +104,4 @@ void	handle_thread(t_data *dta)
 		i++;
 	}
 	return ;
-	// while(&mutex[i])
-	// {
-	// 	free(&mutex[i]);
-	// 	i++;
-	// }
-	// free_and_destroy(dta);
 }

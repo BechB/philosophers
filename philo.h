@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:54:24 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/13 23:38:42 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/17 14:47:13 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_philo {
 	long			last_eat;
 	long			go;
 	int 			death;
+	pthread_mutex_t m_eat;
 	pthread_mutex_t die;
 	pthread_mutex_t *forks;
 	int             left_fork;
@@ -87,6 +88,8 @@ void    init_philo(t_data *dta, int i);
 void	parse_args(t_data *dta, int argc, char **argv);
 void	parse_args2(t_data *dta, int argc, char **argv);
 void	parse_args3(t_data *dta, int argc, char **argv);
+//ONE_PHILO
+int    one_philo(t_philo *philos);
 //HANDLE_PTHREAD
 void	handle_thread(t_data *dta);
 void    *ft_routine(void *dta);
