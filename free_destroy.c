@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 21:59:20 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/15 21:59:54 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:33:36 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,5 @@
 
 void    free_and_destroy(t_data *dta)
 {
-    int i;
-
-    i = 0;
-    while(&dta->philos[i])
-    {
-        free(&dta->philos[i]);
-        i++;
-    }
-    free(dta->philos);
+    (void) dta;
 }

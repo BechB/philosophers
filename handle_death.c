@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 14:19:22 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/16 14:53:35 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/18 18:59:01 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,40 @@ void    *handle_death(void *philos)
 	while(1)
 	{
 		i = 0;
-		while (i < philo[i].nb_philo)
+		while (i < philo->nb_philo)
 		{
+			pthread_mutex_lock(&philo->m_eat);
 			if (philo->last_eat != 0)
 			{
+				pthread_mutex_unlock(&philo->m_eat);
+				pthread_mutex_lock(&philo->finish_meal);
 				if (philo->finish_eat == 1)
+				{
+					pthread_mutex_unlock(&philo->finish_meal);
 					return (NULL);
+				}
+				pthread_mutex_unlock(&philo->finish_meal);
 				current_time = get_time(philos);
+				pthread_mutex_lock(&philo->m_eat);
 				if (current_time - philo->last_eat > (philo->t_die / 1000))
 				{
+					pthread_mutex_unlock(&philo->m_eat);
 					time = get_time(philo) - philo->go;
 					printf(RED "[%ld] :PHILO [%d] IS DEAD\n" RESET, time, philo->id);
 					i = 0;
-					while (i < philo[i].nb_philo)
+					while (i < philo->nb_philo)
 					{
+						pthread_mutex_lock(&philo[i].m_die);
 						philo[i].death = 1;
+						pthread_mutex_unlock(&philo[i].m_die);
 						i++;
 					}
 					return (NULL);
 				}
+				pthread_mutex_unlock(&philo->m_eat);
 			}
+			else
+				pthread_mutex_unlock(&philo->m_eat);
 			i++;
 		}
 	}
