@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 01:41:58 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/18 18:58:23 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/24 18:08:30 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,16 @@ int	lock_unlock(t_philo *philo)
 	return (0);
 }
 
-void    *ft_routine(void *philos)
+void	*ft_routine(void *philos)
 {
-    t_philo *philo = (t_philo *) philos;
+	t_philo	*philo;
 
+	philo = (t_philo *) philos;
 	if (one_philo(philo) == 1)
-	{
-		pthread_mutex_lock(&philo->m_die);
-		philo->death = 1;
-		pthread_mutex_unlock(&philo->m_die);
 		return (NULL);
-	}
-	if (philo->id % 2 == 0 && philo->nb_philo % 2 == 0)
-        usleep(25);
-	while(1)
+	if (philo->id % 2 == 0)
+		usleep(100);
+	while (1)
 	{
 		if (lock_unlock(philo) == 1)
 			return (NULL);
@@ -61,13 +57,14 @@ void    *ft_routine(void *philos)
 	return (NULL);
 }
 
-void    init_philo(t_data *dta, int i)
+void	init_philo(t_data *dta, int i)
 {
 	dta->philos[i].id = i + 1;
+	dta->philos[i].death = 0;
+	dta->philos[i].finish_eat = 0;
+	dta->philos[i].t_have_eat = 0;
+	dta->philos[i].last_eat = 0;
 	dta->philos[i].nb_philo = dta->nb_philo;
-	pthread_mutex_init(&dta->philos[i].m_die, NULL);
-	pthread_mutex_init(&dta->philos[i].m_eat, NULL);
-	pthread_mutex_init(&dta->philos[i].finish_meal, NULL);
 	dta->philos[i].t_die = dta->t_die;
 	dta->philos[i].t_eat = dta->t_eat;
 	dta->philos[i].t_sleep = dta->t_sleep;
@@ -79,20 +76,24 @@ void    init_philo(t_data *dta, int i)
 	else
 		dta->philos[i].right_fork = dta->philos[i].id;
 	dta->philos[i].left_fork = dta->philos[i].id - 1;
+	pthread_mutex_init(&dta->philos[i].m_die, NULL);
+	pthread_mutex_init(&dta->philos[i].m_eat, NULL);
+	pthread_mutex_init(&dta->philos[i].finish_meal, NULL);
 }
 
 void	join_and_destroy(t_data *dta, pthread_t *philo_ids)
 {
 	int			i;
 	pthread_t	checker;
-	
+
 	i = 0;
 	if (dta->nb_philo > 1)
 		pthread_create(&checker, NULL, handle_death, (void *)dta->philos);
 	i = -1;
 	while (++i < dta->nb_philo)
 		pthread_join(philo_ids[i], NULL);
-	pthread_join(checker, NULL);
+	if (dta->nb_philo > 1)
+		pthread_join(checker, NULL);
 	i = -1;
 	while (++i < dta->nb_philo)
 		pthread_mutex_destroy(&dta->philos->forks[i]);
@@ -101,42 +102,28 @@ void	join_and_destroy(t_data *dta, pthread_t *philo_ids)
 
 void	handle_thread(t_data *dta)
 {
-	int				i;
-	pthread_t		*philo_ids;
-	pthread_mutex_t	*mutex;
+	int	i;
 
 	dta->philos->death = 0;
-	mutex = malloc((sizeof(pthread_mutex_t)) * dta->nb_philo);
-	philo_ids = malloc(sizeof(pthread_t) * dta->nb_philo);
-	i = 0;
-	while (i < dta->nb_philo)
-	{
-		pthread_mutex_init(&mutex[i], NULL);
-		i++;
-	}
-	i = 0;
+	dta->philos->mutex = malloc((sizeof(pthread_mutex_t)) * dta->nb_philo);
+	dta->philos->philo_ids = malloc(sizeof(pthread_t) * dta->nb_philo);
+	i = -1;
+	while (++i < dta->nb_philo)
+		pthread_mutex_init(&dta->philos->mutex[i], NULL);
+	i = -1;
 	dta->philos->go = get_time(dta->philos);
-	while(i < dta->nb_philo)
+	while (++i < dta->nb_philo)
 	{
 		init_philo(dta, i);
-		dta->philos[i].forks = mutex;
-		i++;
+		dta->philos[i].forks = dta->philos->mutex;
 	}
 	i = -1;
 	while (++i < dta->nb_philo)
-		pthread_create(&philo_ids[i] , NULL, ft_routine, (void *) &dta->philos[i]);
-	join_and_destroy(dta, philo_ids);
-	i = 0;
-    while (i < dta->nb_philo)
 	{
-        pthread_mutex_destroy(&mutex[i]);
-		pthread_mutex_destroy(&dta->philos[i].m_eat);
-		pthread_mutex_destroy(&dta->philos[i].m_die);
-		pthread_mutex_destroy(&dta->philos[i].finish_meal);
-		pthread_mutex_destroy(&dta->philos[i].die);
-		i++;	
+		pthread_create(&dta->philos->philo_ids[i], NULL,
+			ft_routine, (void *) &dta->philos[i]);
 	}
-	free(mutex);
-	free(philo_ids);
+	join_and_destroy(dta, dta->philos->philo_ids);
+	free_and_destroy(dta);
 	return ;
 }

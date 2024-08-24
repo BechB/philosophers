@@ -6,7 +6,7 @@
 /*   By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 14:16:42 by bbousaad          #+#    #+#             */
-/*   Updated: 2024/08/17 14:37:39 by bbousaad         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:51:19 by bbousaad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_atoi(char *str)
 {
-	int				res;
-	int				s;
-	int				d;
+	int	res;
+	int	s;
+	int	d;
 
 	d = 0;
 	res = 0;
@@ -42,21 +42,4 @@ int	ft_isdigit(int c)
 	if ((c <= '9') && (c >= '0'))
 		return (1);
 	return (0);
-}
-
-int	ft_isalpha(int i)
-{
-	if (((i <= 122) && (i >= 97)) || ((i <= 90) && (i >= 65)))
-		return (1);
-	return (0);
-}
-
-int	len_read(char **tab, int i)
-{
-	int	len;
-
-	len = 0;
-	while (tab[i][len])
-		len++;
-	return (len);
 }

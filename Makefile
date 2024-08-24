@@ -6,7 +6,7 @@
 #    By: bbousaad <bbousaad@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/15 19:45:06 by bbousaad          #+#    #+#              #
-#    Updated: 2024/08/18 19:02:10 by bbousaad         ###   ########.fr        #
+#    Updated: 2024/08/24 16:20:02 by bbousaad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC = main.c \
 
 OBJ = $(SRC:.c=.o)
 
-CC = gcc -Wall -Wextra -Werror -fsanitize=address -g
+CC = gcc -Wall -Wextra -Werror #-fsanitize=thread -g
 .c.o = $(CC) -c -o $(OBJ)
 
 $(NAME): $(OBJ)
